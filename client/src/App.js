@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
+import { stats } from './components/Stats';
 
 function App() {
     const [userInput, setUserInput] = useState('');
@@ -35,6 +36,7 @@ function App() {
             });
 
             if (response.data.correct) {
+                stats(true)
                 setMessage('Correct! You solved the anagram.');
             } else {
                 setMessage('Incorrect! Please try again.');
