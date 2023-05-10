@@ -47,7 +47,6 @@ function App() {
         }
     };
 
-
     const handleDrop = (e, index) => {
         const id = e.dataTransfer.getData("text");
         const letter = letters.find(item => item.id === Number(id));
@@ -79,12 +78,6 @@ function App() {
             return newBoxes;
         });
     };
-
-
-
-
-
-
 
     const handleDragStart = (e, id) => {
         e.dataTransfer.setData("text", id);
