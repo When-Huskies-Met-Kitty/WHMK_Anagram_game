@@ -7,6 +7,9 @@ function App() {
     const [message, setMessage] = useState("");
     const [letters, setLetters] = useState([]);
     const [boxes, setBoxes] = useState([]);
+    const [retryCount, setRetryCount] = useState(0);
+    const [timer, setTimer] = useState(180);
+    const [gameOver, setGameOver] = useState(false);
 
     useEffect(() => {
         fetch('/api/clues/random')
@@ -26,18 +29,37 @@ function App() {
             .catch((error) => {
                 console.error('Error:', error);
             });
+
+        const interval = setInterval(() => {
+            setTimer(prevTimer => prevTimer - 1);
+        }, 1000);
+
+        return () => clearInterval(interval);
     }, []);
+
+    useEffect(() => {
+        if (timer <= 0) {
+            setGameOver(true);
+        }
+    }, [timer]);
 
     const handleSubmit = async () => {
         const response = await axios.post('http://localhost:5000/api/clues/validate', {
             answer: boxes.map(box => box?.value).join(''),
             clueId: clue._id,
         });
+
         if (response.data.correct) {
-            stats(true)
+            stats(true);
             setMessage('Correct! You solved the anagram.');
+            setGameOver(true); // Set gameOver to true
         } else {
             setMessage('Incorrect! Please try again.');
+            setRetryCount(prevRetryCount => prevRetryCount + 1);
+
+            if (retryCount + 1 >= 3) {
+                setGameOver(true);
+            }
 
             // Reset the board
             const answerLetters = clue.answer.split('');
@@ -80,15 +102,10 @@ function App() {
         });
     };
 
-
-
-
-
-
-
     const handleDragStart = (e, id) => {
         e.dataTransfer.setData("text", id);
     };
+
 
     const shuffle = (array) => {
         var currentIndex = array.length, temporaryValue, randomIndex;
@@ -112,45 +129,60 @@ function App() {
     return (
         <div className="App" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1>Anagram Game</h1>
-            {clue ? (
+            {!gameOver && timer > 0 ? (
                 <>
-                    <p>Clue: {clue.clue}</p>
-                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
-                        {boxes.map((box, index) => (
-                            <div
-                                key={index}
-                                onDrop={e => handleDrop(e, index)}
-                                onDragOver={e => e.preventDefault()}
-                                draggable
-                                onDragStart={e => box && handleDragStart(e, box.id)}
-                                style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
-                            >
-                                {box?.value}
-                            </div>
-                        ))}
+                    <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
+                        Timer: {Math.floor(timer / 60)}:{timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
                     </div>
-                    <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
-                        {letters.map((letter, index) => (
-                            <div
-                                key={index}
-                                draggable
-                                onDragStart={e => handleDragStart(e, letter.id)}
-                                style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
-                            >
-                                {letter.value}
+                    {clue ? (
+                        <>
+                            <p>Clue: {clue.clue}</p>
+                            <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+                                {boxes.map((box, index) => (
+                                    <div
+                                        key={index}
+                                        onDrop={e => handleDrop(e, index)}
+                                        onDragOver={e => e.preventDefault()}
+                                        draggable
+                                        onDragStart={e => box && handleDragStart(e, box.id)}
+                                        style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
+                                    >
+                                        {box?.value}
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                    <button onClick={handleSubmit}>Submit</button>
+                            <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+                                {letters.map((letter, index) => (
+                                    <div
+                                        key={index}
+                                        draggable
+                                        onDragStart={e => handleDragStart(e, letter.id)}
+                                        style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
+                                    >
+                                        {letter.value}
+                                    </div>
+                                ))}
+                            </div>
+                            <button onClick={handleSubmit}>Submit</button>
+                        </>
+                    ) : (
+                        <p>Loading...</p>
+                    )}
+                    <p>{message}</p>
                 </>
             ) : (
-                <p>Loading...</p>
+                <div>
+                    {timer <= 0 ? (
+                        <p>Time's up! Game over.</p>
+                    ) : retryCount >= 3 ? (
+                        <p>Maximum retries reached. Game over.</p>
+                    ) : (
+                        <p>Congratulations! You won the game.</p>
+                    )}
+                </div>
             )}
-            <p>{message}</p>
         </div>
     );
 }
 
 export default App;
-
-
