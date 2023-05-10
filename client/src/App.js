@@ -38,19 +38,53 @@ function App() {
             setMessage('Correct! You solved the anagram.');
         } else {
             setMessage('Incorrect! Please try again.');
+
+            // Reset the board
+            const answerLetters = clue.answer.split('');
+            const shuffledLetters = shuffle(answerLetters.map((letter, index) => ({ id: index, value: letter })));
+            setLetters(shuffledLetters);
+            setBoxes(new Array(answerLetters.length).fill(null));
         }
     };
+
 
     const handleDrop = (e, index) => {
         const id = e.dataTransfer.getData("text");
         const letter = letters.find(item => item.id === Number(id));
-        setLetters(prevLetters => prevLetters.filter(item => item.id !== Number(id)));
+        let box = null;
+        let originIndex = null;
+
+        if (!letter) {
+            box = boxes.find((box, idx) => {
+                if (box && box.id === Number(id)) {
+                    originIndex = idx;
+                    return box;
+                }
+                return false;
+            });
+            if (box) {
+                setBoxes(prevBoxes => prevBoxes.map((prevBox, boxIndex) => (boxIndex === originIndex ? null : prevBox)));
+            }
+        } else {
+            setLetters(prevLetters => prevLetters.filter(item => item.id !== Number(id)));
+        }
+
         setBoxes(prevBoxes => {
             const newBoxes = [...prevBoxes];
-            newBoxes[index] = letter;
+            const displacedLetter = newBoxes[index];
+            if (displacedLetter) {
+                setLetters(prevLetters => [...prevLetters, displacedLetter]);
+            }
+            newBoxes[index] = letter || box;
             return newBoxes;
         });
     };
+
+
+
+
+
+
 
     const handleDragStart = (e, id) => {
         e.dataTransfer.setData("text", id);
@@ -87,6 +121,8 @@ function App() {
                                 key={index}
                                 onDrop={e => handleDrop(e, index)}
                                 onDragOver={e => e.preventDefault()}
+                                draggable
+                                onDragStart={e => box && handleDragStart(e, box.id)}
                                 style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
                             >
                                 {box?.value}
@@ -116,7 +152,5 @@ function App() {
 }
 
 export default App;
-
-
 
 
