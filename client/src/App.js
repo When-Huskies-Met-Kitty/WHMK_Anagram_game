@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { stats } from './components/Stats';
+import { updateStats } from './components/Stats';
 
 function App() {
     const [clue, setClue] = useState(null);
@@ -52,7 +52,7 @@ function App() {
         });
 
         if (response.data.correct) {
-            stats(true);
+            updateStats(true);
             setMessage('Correct! You solved the anagram.');
             setGameOver(true); // Set gameOver to true
             setEndTime(new Date().getTime()); // Set the end time
@@ -62,6 +62,7 @@ function App() {
             setRetryCount(prevRetryCount => prevRetryCount + 1);
 
             if (retryCount + 1 >= 3) {
+                updateStats(false)
                 setGameOver(true);
                 setEndTime(new Date().getTime()); // Set the end time
             }
