@@ -8,10 +8,23 @@ function App() {
     const [letters, setLetters] = useState([]);
     const [boxes, setBoxes] = useState([]);
     const [retryCount, setRetryCount] = useState(0);
-    const [timer, setTimer] = useState(180);
     const [gameOver, setGameOver] = useState(false);
+    const [startTime, setStartTime] = useState(null);
+    const [endTime, setEndTime] = useState(null);
+    const [totalTime, setTotalTime] = useState(0);
 
     useEffect(() => {
+        const lastPlayedTime = localStorage.getItem('lastPlayedTime');
+        if (lastPlayedTime) {
+            const twentyFourHours = 24 * 60 * 60 * 1000;
+            const currentTime = new Date().getTime();
+            const timeDiff = currentTime - parseInt(lastPlayedTime, 10);
+            if (timeDiff < twentyFourHours) {
+                setGameOver(true);
+                setMessage('You can only play once per day. Please come back tomorrow.');
+            }
+        }
+
         fetch('/api/clues/random')
             .then((response) => {
                 if (!response.ok) {
@@ -25,23 +38,12 @@ function App() {
                 const shuffledLetters = shuffle(answerLetters.map((letter, index) => ({ id: index, value: letter })));
                 setLetters(shuffledLetters);
                 setBoxes(new Array(answerLetters.length).fill(null));
+                setStartTime(new Date().getTime()); // Set the start time
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
-
-        const interval = setInterval(() => {
-            setTimer(prevTimer => prevTimer - 1);
-        }, 1000);
-
-        return () => clearInterval(interval);
     }, []);
-
-    useEffect(() => {
-        if (timer <= 0) {
-            setGameOver(true);
-        }
-    }, [timer]);
 
     const handleSubmit = async () => {
         const response = await axios.post('http://localhost:5000/api/clues/validate', {
@@ -53,12 +55,15 @@ function App() {
             stats(true);
             setMessage('Correct! You solved the anagram.');
             setGameOver(true); // Set gameOver to true
+            setEndTime(new Date().getTime()); // Set the end time
         } else {
             setMessage('Incorrect! Please try again.');
+
             setRetryCount(prevRetryCount => prevRetryCount + 1);
 
             if (retryCount + 1 >= 3) {
                 setGameOver(true);
+                setEndTime(new Date().getTime()); // Set the end time
             }
 
             // Reset the board
@@ -69,7 +74,6 @@ function App() {
         }
     };
 
-
     const handleDrop = (e, index) => {
         const id = e.dataTransfer.getData("text");
         const letter = letters.find(item => item.id === Number(id));
@@ -77,13 +81,14 @@ function App() {
         let originIndex = null;
 
         if (!letter) {
-            box = boxes.find((box, idx) => {
-                if (box && box.id === Number(id)) {
-                    originIndex = idx;
-                    return box;
-                }
-                return false;
-            });
+            box = boxes
+                .find((box, idx) => {
+                    if (box && box.id === Number(id)) {
+                        originIndex = idx;
+                        return box;
+                    }
+                    return false;
+                });
             if (box) {
                 setBoxes(prevBoxes => prevBoxes.map((prevBox, boxIndex) => (boxIndex === originIndex ? null : prevBox)));
             }
@@ -106,34 +111,40 @@ function App() {
         e.dataTransfer.setData("text", id);
     };
 
+    const shuffle = array => {
+        var currentIndex = array.length,
+            temporaryValue,
+            randomIndex;
 
-    const shuffle = (array) => {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-
-        // While there remain elements to shuffle...
         while (0 !== currentIndex) {
-
-            // Pick a remaining element...
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex -= 1;
-
-            // And swap it with the current element.
             temporaryValue = array[currentIndex];
             array[currentIndex] = array[randomIndex];
             array[randomIndex] = temporaryValue;
         }
 
         return array;
-    }
+    };
+
+    useEffect(() => {
+        if (gameOver && startTime && endTime) {
+            const timeTakenInSeconds = Math.floor((endTime - startTime) / 1000);
+            setTotalTime(timeTakenInSeconds);
+        }
+    }, [gameOver, startTime, endTime]);
+
+    useEffect(() => {
+        if (endTime) {
+            localStorage.setItem('lastPlayedTime', endTime.toString());
+        }
+    }, [endTime]);
 
     return (
         <div className="App" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1>Anagram Game</h1>
-            {!gameOver && timer > 0 ? (
+            {!gameOver ? (
                 <>
-                    <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
-                        Timer: {Math.floor(timer / 60)}:{timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
-                    </div>
                     {clue ? (
                         <>
                             <p>Clue: {clue.clue}</p>
@@ -172,17 +183,24 @@ function App() {
                 </>
             ) : (
                 <div>
-                    {timer <= 0 ? (
-                        <p>Time's up! Game over.</p>
-                    ) : retryCount >= 3 ? (
-                        <p>Maximum retries reached. Game over.</p>
+                    {retryCount >= 3 ? (
+                        <p>You have used all your tries. Game over.</p>
                     ) : (
-                        <p>Congratulations! You won the game.</p>
+                        <>
+                            {localStorage.getItem('lastPlayedTime') ? (
+                                <p>You have already played today. Please come back tomorrow.</p>
+                            ) : (
+                                <p>Congratulations! You won the game.</p>
+                            )}
+                        </>
                     )}
+                    {/* Display the total time taken */}
+                    <p>Total time taken: {totalTime} seconds</p>
                 </div>
             )}
         </div>
     );
+
 }
 
 export default App;
