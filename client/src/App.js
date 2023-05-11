@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { stats } from './components/Stats';
+import './App.css'
 
 function App() {
     const [clue, setClue] = useState(null);
@@ -12,6 +13,7 @@ function App() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [totalTime, setTotalTime] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const lastPlayedTime = localStorage.getItem('lastPlayedTime');
@@ -140,6 +142,15 @@ function App() {
         }
     }, [endTime]);
 
+    const openPopup = () => {
+        setIsOpen(true);
+      };
+
+    const closePopup = () => {
+        setIsOpen(false);
+    };
+
+
     return (
         <div className="App" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <h1>Anagram Game</h1>
@@ -147,34 +158,53 @@ function App() {
                 <>
                     {clue ? (
                         <>
-                            <p>Clue: {clue.clue}</p>
-                            <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
-                                {boxes.map((box, index) => (
-                                    <div
-                                        key={index}
-                                        onDrop={e => handleDrop(e, index)}
-                                        onDragOver={e => e.preventDefault()}
-                                        draggable
-                                        onDragStart={e => box && handleDragStart(e, box.id)}
-                                        style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
-                                    >
-                                        {box?.value}
+                            <div id="top-of-game" style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "100px" }}>
+                                <div id="stats">
+                                    <p onClick={openPopup}>Statistics!</p>
+                                    {isOpen && (
+                                    <div className="overlay">
+                                        <div className="popup">
+                                        <span className="close" onClick={closePopup}>&times;</span>
+                                        <p>ADD STATS HERE</p>
+                                        </div>
                                     </div>
-                                ))}
+                                    )}
+                                </div>
+
+                                <div id="tries-left">
+                                    <p>Number of Times Tried: {retryCount}</p>
+                                </div>
                             </div>
-                            <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
-                                {letters.map((letter, index) => (
-                                    <div
-                                        key={index}
-                                        draggable
-                                        onDragStart={e => handleDragStart(e, letter.id)}
-                                        style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
-                                    >
-                                        {letter.value}
-                                    </div>
-                                ))}
+                            <div id="game-board" style={{ display: "flex", flexDirection: "column", alignItems: "center", border: "1px solid black", padding: "10px"}}>
+                                <p>Clue: {clue.clue}</p>
+                                <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+                                    {boxes.map((box, index) => (
+                                        <div
+                                            key={index}
+                                            onDrop={e => handleDrop(e, index)}
+                                            onDragOver={e => e.preventDefault()}
+                                            draggable
+                                            onDragStart={e => box && handleDragStart(e, box.id)}
+                                            style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
+                                        >
+                                            {box?.value}
+                                        </div>
+                                    ))}
+                                </div>
+                                <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+                                    {letters.map((letter, index) => (
+                                        <div
+                                            key={index}
+                                            draggable
+                                            onDragStart={e => handleDragStart(e, letter.id)}
+                                            style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
+                                        >
+                                            {letter.value}
+                                        </div>
+                                    ))}
+                                </div>
+                                <button onClick={handleSubmit}>Submit</button>
                             </div>
-                            <button onClick={handleSubmit}>Submit</button>
                         </>
                     ) : (
                         <p>Loading...</p>
