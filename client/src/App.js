@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { stats } from './components/Stats';
+//import { stats } from './components/Stats';
 import './App.css'
 import { updateStats } from './components/Stats';
 
@@ -117,7 +117,7 @@ function App() {
     };
 
     const shuffle = array => {
-        var currentIndex = array.length,
+        let currentIndex = array.length,
             temporaryValue,
             randomIndex;
 
@@ -221,7 +221,20 @@ function App() {
                     ) : (
                         <>
                             {localStorage.getItem('lastPlayedTime') ? (
-                                <p>You have already played today. Please come back tomorrow.</p>
+                                <>
+                                    <p>You have already played today. Please come back tomorrow.</p>
+                                    <div id="stats">
+                                        <p onClick={openPopup}>Statistics!</p>
+                                        {isOpen && (
+                                            <div className="overlay">
+                                                <div className="popup">
+                                                    <span className="close" onClick={closePopup}>&times;</span>
+                                                    <p>ADD STATS HERE</p>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </>
                             ) : (
                                 <p>Congratulations! You won the game.</p>
                             )}
