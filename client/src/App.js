@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { stats } from './components/Stats';
 import './App.css'
-import { updateStats } from './components/Stats';
+import { displayStats, updateStats, updateStreak } from './components/Stats';
 
 
 function App() {
@@ -153,6 +152,9 @@ function App() {
         setIsOpen(false);
     };
 
+    const statValues = displayStats();
+
+    updateStreak();
 
     return (
         <div className="App" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -168,7 +170,7 @@ function App() {
                                     <div className="overlay">
                                         <div className="popup">
                                         <span className="close" onClick={closePopup}>&times;</span>
-                                        <p>ADD STATS HERE</p>
+                                        <p>{statValues}</p>
                                         </div>
                                     </div>
                                     )}
