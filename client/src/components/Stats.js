@@ -36,6 +36,25 @@ export function getStats() {
 
 }
 
+export function updateStreak() {
+    const currGame = getStats()
+    const todayDate = todayString();
+    const diff = new Date(todayDate) - new Date(currGame.lastDatePlayed);
+    const dayDiff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    if (dayDiff > 1) {
+        currGame.currStreak = 0;
+    }
+
+    localStorage.setItem('whmk_game', JSON.stringify(currGame));
+}
+
+export function displayStats() {
+    const currGame = getStats();
+    const statValues = "Current Streak: " + currGame.currStreak + "\n Max Streak: " + currGame.maxStreak + "\n Win Rate: " + currGame.winRate + "%";
+    return statValues;
+}
+
 export function updateStats(won) {
     const stats = getStats();
      
