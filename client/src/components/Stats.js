@@ -1,5 +1,5 @@
 function formatDate(date) {
-    var d = new Date(date),
+    let d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
@@ -14,8 +14,7 @@ function formatDate(date) {
 
 function todayString() {
     const today = new Date();
-    const todayString = formatDate(today);
-    return todayString
+    return formatDate(today)
 }
 
 export function getStats() {
@@ -31,7 +30,7 @@ export function getStats() {
     };
     if (currGameJson) {
         stats = currGameJson;
-    };
+    }
 
     return stats
 
@@ -86,5 +85,4 @@ export function updateStats(won) {
 
     localStorage.setItem('whmk_game', JSON.stringify(stats));
 
-    return
-};
+}
