@@ -181,7 +181,8 @@ const GamePage = () => {
                             </div>
                             <div id="game-board" style={{ display: "flex", flexDirection: "column", alignItems: "center", border: "1px solid black", padding: "10px"}}>
                                 <p>Clue: {clue.clue}</p>
-                                <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+                                <a href={clue.articleUrl} style={{marginBottom: "10px" }}>Click here to visit article</a>
+                                <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
                                     {boxes.map((box, index) => (
                                         <div
                                             key={index}
