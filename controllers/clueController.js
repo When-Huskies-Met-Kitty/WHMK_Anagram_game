@@ -38,5 +38,26 @@ exports.validateAnswer = async (req, res) => {
     }
 };
 
+exports.saveClueData = async(req,res) => {
+    const { answer, clue, articleUrl, used} = req.body;
+
+    try{
+        const insertObj = await Clue.create({
+            answer: answer,
+            clue: clue,
+            articleUrl: articleUrl,
+            user:used
+        });
+        if(insertObj != null){
+            res.json({ isClueSaved: true });
+        }else{
+            res.json({ isClueSaved: false });
+        }
+    }catch(error){
+        console.error('Error saving clue data : ', error);
+        res.status(500).json({ message: 'Error saving clue data' });
+    }
+}
+
 
 
