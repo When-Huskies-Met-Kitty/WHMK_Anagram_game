@@ -13,19 +13,22 @@ const testData = [
         clue: "This is a test clue 1",
         answer: "testanswer1",
         articleUrl: "https://example.com/test-article-1",
-        used: false
+        used: false,
+        dayOfUse: null
     },
     {
         clue: "This is a test clue 2",
         answer: "testanswer2",
         articleUrl: "https://example.com/test-article-2",
-        used: false
+        used: false,
+        dayOfUse: null
     },
     {
         clue: "This is a test clue 3",
         answer: "testanswer3",
         articleUrl: "https://example.com/test-article-3",
-        used: false
+        used: false,
+        dayOfUse: null
     }
 ];
 

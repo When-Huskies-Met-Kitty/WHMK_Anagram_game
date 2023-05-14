@@ -13,7 +13,7 @@ const ClueDataPage = ({ clueData }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if(answer == '' || clue == '' || articleUrl == ''){
+    if(answer === '' || clue === '' || articleUrl === ''){
       toast.warning("Please enter required details");
       return;
     }
