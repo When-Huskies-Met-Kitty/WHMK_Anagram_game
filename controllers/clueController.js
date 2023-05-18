@@ -55,14 +55,15 @@ exports.validateAnswer = async (req, res) => {
 };
 
 exports.saveClueData = async(req,res) => {
-    const { answer, clue, articleUrl, used} = req.body;
+    const { answer, clue, articleUrl, used, dayOfUse} = req.body;
 
     try{
         const insertObj = await Clue.create({
             answer: answer,
             clue: clue,
             articleUrl: articleUrl,
-            user:used
+            user:used,
+            dayOfUse: dayOfUse
         });
         if(insertObj != null){
             res.json({ isClueSaved: true });
@@ -72,6 +73,41 @@ exports.saveClueData = async(req,res) => {
     }catch(error){
         console.error('Error saving clue data : ', error);
         res.status(500).json({ message: 'Error saving clue data' });
+    }
+}
+
+exports.getEntireClueData = async(req,res) => {
+    try{
+        const clueData = await Clue.find();
+        if(clueData != null){
+            res.json({ clueData: clueData, doesClueDataExist:true });
+        }else{
+            res.json({ doesClueDataExist:false });
+        }
+    }catch(error){
+        console.error('Error while fetching clue data : ', error);
+        res.status(500).json({ message: 'Error while fetching clue data' });
+    }
+}
+
+exports.updateClueData = async(req, res) => {
+    try{
+        console.log(req.body);
+        const { _id, answer, clue, articleUrl, used, dayOfUse} = req.body;
+        let clueData = await Clue.findOne({ _id: _id });
+        
+        clueData.answer = answer;
+        clueData.clue = clue;
+        clueData.articleUrl = articleUrl;
+        clueData.used = used;
+        clueData.dayOfUse = dayOfUse;
+    
+        await clueData.save();
+
+        res.json({ isClueUpdated: true });
+    }catch(error){
+        console.error('Error while updating clue data : ', error);
+        res.status(500).json({ message: 'Error while updating clue data' });
     }
 }
 

@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './ClueDataPage.css';
+import './AddCluePage.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const ClueDataPage = ({ clueData }) => {
+const AddCluePage = (props) => {
   const [answer, setAnswer] = useState('');
   const [clue, setClue] = useState('');
   const [articleUrl, setArticleUrl] = useState('');
   const [used, setUsed] = useState(false);
+  const [dayOfUse , setDayOfUse] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if(answer === '' || clue === '' || articleUrl === ''){
+    console.log("datetime-local "+ dayOfUse);
+
+    if(answer === '' || clue === '' || articleUrl === '' || dayOfUse ===''){
       toast.warning("Please enter required details");
       return;
     }
+    console.log("day Of use " + dayOfUse);
     const response = await axios.post('http://localhost:5000/api/clues/saveClueData', {
             answer: answer,
             clue: clue,
             articleUrl: articleUrl,
-            uses: used
+            uses: used,
+            dayOfUse: new Date(dayOfUse).getTime()
         });
         console.log(response);
         if (response.data.isClueSaved) {
@@ -36,6 +41,7 @@ const ClueDataPage = ({ clueData }) => {
             progressBar: false,
             theme: "light",
             });
+            props.callBack && props.callBack();
 
         } else {
           toast.error("Error while saving clue",{
@@ -56,9 +62,16 @@ const ClueDataPage = ({ clueData }) => {
     setArticleUrl('');
     setClue('');
     setUsed(false);
+    setDayOfUse('');
+  };
+
+  const onDataChangehandler = (event) => {
+    const dateInMilliseconds = new Date(event.target.value).getTime();
+    setDayOfUse(dateInMilliseconds);
   };
   return (
     <div>
+      <h2>Add Clue</h2>
       <form onSubmit={handleSubmit}>
         <div className='form-group'>
           <label>Answer<span className="required">*</span>:</label>
@@ -80,12 +93,16 @@ const ClueDataPage = ({ clueData }) => {
           <input type="checkbox" checked={used} onChange={(event) => setUsed(event.target.checked)} />
         </div>
         <br />
+        <div className='form-group'>
+          <label>Day of Use<span className="required">*</span>:</label>
+          <input type="date" value={dayOfUse} onChange={(event => setDayOfUse(event.target.value))}/>
+        </div>
         <input type="submit" value="Submit" />
       </form>
-      <ToastContainer/>
+      {/* <ToastContainer/> */}
     </div>
   );
 };
 
-export default ClueDataPage;
+export default AddCluePage;
 
