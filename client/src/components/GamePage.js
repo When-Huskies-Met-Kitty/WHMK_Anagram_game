@@ -14,6 +14,8 @@ const GamePage = () => {
     const [endTime, setEndTime] = useState(null);
     const [totalTime, setTotalTime] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const [incorrectWords, setIncorrectWords] = useState("");
+    const [helpIsOpen, setHelpIsOpen] = useState(false);
 
     useEffect(() => {
         const lastPlayedTime = localStorage.getItem('lastPlayedTime');
@@ -59,7 +61,10 @@ const GamePage = () => {
             setGameOver(true); // Set gameOver to true
             setEndTime(new Date().getTime()); // Set the end time
         } else {
+            const guess = JSON.stringify(response.config.data).split('\"');
+            const incorrectGuess = guess[4]
             setMessage('Incorrect! Please try again.');
+            setIncorrectWords(incorrectWords.concat(" ", incorrectGuess.substring(0,incorrectGuess.length-1)));
 
             setRetryCount(prevRetryCount => prevRetryCount + 1);
 
@@ -151,6 +156,14 @@ const GamePage = () => {
         setIsOpen(false);
     };
 
+    const openHelpPopup = () => {
+        setHelpIsOpen(true);
+      };
+
+    const closeHelpPopup = () => {
+        setHelpIsOpen(false);
+    };
+
     const statValues = displayStats();
 
     updateStreak();
@@ -177,6 +190,18 @@ const GamePage = () => {
 
                                 <div id="tries-left">
                                     <p>Number of Times Tried: {retryCount}</p>
+                                </div>
+
+                                <div id="help">
+                                    <p onClick={openHelpPopup}>Help</p>
+                                    {helpIsOpen && (
+                                    <div className="overlay">
+                                        <div className="popup">
+                                        <span className="close" onClick={closeHelpPopup}>&times;</span>
+                                        <p>Drag and drop a letter into an empty box to spell out the scrambled word.</p>
+                                        </div>
+                                    </div>
+                                    )}
                                 </div>
                             </div>
                             <div id="game-board" style={{ display: "flex", flexDirection: "column", alignItems: "center", border: "1px solid black", padding: "10px"}}>
@@ -210,6 +235,9 @@ const GamePage = () => {
                                 </div>
                                 <button onClick={handleSubmit}>Submit</button>
                             </div>
+                            <div id="incorrect guesses">
+                                    <p>Guesses: {incorrectWords}</p>
+                            </div>
                         </>
                     ) : (
                         <p>Loading...</p>
@@ -231,7 +259,7 @@ const GamePage = () => {
                                             <div className="overlay">
                                                 <div className="popup">
                                                     <span className="close" onClick={closePopup}>&times;</span>
-                                                    <p>ADD STATS HERE</p>
+                                                    <p>{statValues}</p>
                                                 </div>
                                             </div>
                                         )}
