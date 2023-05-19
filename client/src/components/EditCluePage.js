@@ -10,15 +10,15 @@ const EditPage = (props) => {
     const [answer, setAnswer] = useState(props.clue.answer);
     const [clue, setClue] = useState(props.clue.clue);
     const [articleUrl, setArticleUrl] = useState(props.clue.articleUrl);
-    const [used, setUsed] = useState(props.clue.used);
-    const [dayOfUse , setDayOfUse] = useState(props.clue.dayOfUse && props.clue.dayOfUse.split('T')[0]);
+    const [used, setUsed] = useState(props.clue.used || false);
+    const [dayOfUse , setDayOfUse] = useState(props.clue.dayOfUse && props.clue.dayOfUse.split('T')[0] || '');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
     
         console.log("datetime-local "+ dayOfUse);
     
-        if(answer === '' || clue === '' || articleUrl === '' || dayOfUse ===''){
+        if(answer === '' || clue === '' || articleUrl === ''){
           toast.warning("Please enter required details");
           return;
         }
@@ -28,7 +28,7 @@ const EditPage = (props) => {
                 answer: answer,
                 clue: clue,
                 articleUrl: articleUrl,
-                uses: used,
+                used: used,
                 dayOfUse: new Date(dayOfUse).getTime()
             });
             console.log(response);
@@ -94,12 +94,11 @@ const EditPage = (props) => {
             </div>
             <br />
             <div className='form-group'>
-              <label>Day of Use<span className="required">*</span>:</label>
+              <label>Day of Use:</label>
               <input type="date" value={dayOfUse} onChange={(event => setDayOfUse(event.target.value))}/>
             </div>
             <input type="submit" value="Submit" />
           </form>
-          {/* <ToastContainer/> */}
         </div>
       );
 }

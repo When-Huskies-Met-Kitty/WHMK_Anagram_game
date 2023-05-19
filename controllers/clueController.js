@@ -55,15 +55,13 @@ exports.validateAnswer = async (req, res) => {
 };
 
 exports.saveClueData = async(req,res) => {
-    const { answer, clue, articleUrl, used, dayOfUse} = req.body;
+    const { answer, clue, articleUrl} = req.body;
 
     try{
         const insertObj = await Clue.create({
             answer: answer,
             clue: clue,
-            articleUrl: articleUrl,
-            user:used,
-            dayOfUse: dayOfUse
+            articleUrl: articleUrl
         });
         if(insertObj != null){
             res.json({ isClueSaved: true });

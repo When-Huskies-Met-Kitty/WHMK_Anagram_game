@@ -8,25 +8,20 @@ const AddCluePage = (props) => {
   const [answer, setAnswer] = useState('');
   const [clue, setClue] = useState('');
   const [articleUrl, setArticleUrl] = useState('');
-  const [used, setUsed] = useState(false);
-  const [dayOfUse , setDayOfUse] = useState('');
+ 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("datetime-local "+ dayOfUse);
-
-    if(answer === '' || clue === '' || articleUrl === '' || dayOfUse ===''){
+    if(answer === '' || clue === '' || articleUrl === ''){
       toast.warning("Please enter required details");
       return;
     }
-    console.log("day Of use " + dayOfUse);
+    
     const response = await axios.post('http://localhost:5000/api/clues/saveClueData', {
             answer: answer,
             clue: clue,
-            articleUrl: articleUrl,
-            uses: used,
-            dayOfUse: new Date(dayOfUse).getTime()
+            articleUrl: articleUrl
         });
         console.log(response);
         if (response.data.isClueSaved) {
@@ -61,14 +56,8 @@ const AddCluePage = (props) => {
     setAnswer('');
     setArticleUrl('');
     setClue('');
-    setUsed(false);
-    setDayOfUse('');
   };
 
-  const onDataChangehandler = (event) => {
-    const dateInMilliseconds = new Date(event.target.value).getTime();
-    setDayOfUse(dateInMilliseconds);
-  };
   return (
     <div>
       <h2>Add Clue</h2>
@@ -88,18 +77,8 @@ const AddCluePage = (props) => {
           <input type="text" placeholder="Enter clue article url" value={articleUrl} onChange={(event) => setArticleUrl(event.target.value)} />
         </div>
         <br />
-        <div className='form-group'>
-          <label>Used:</label>
-          <input type="checkbox" checked={used} onChange={(event) => setUsed(event.target.checked)} />
-        </div>
-        <br />
-        <div className='form-group'>
-          <label>Day of Use<span className="required">*</span>:</label>
-          <input type="date" value={dayOfUse} onChange={(event => setDayOfUse(event.target.value))}/>
-        </div>
         <input type="submit" value="Submit" />
       </form>
-      {/* <ToastContainer/> */}
     </div>
   );
 };
