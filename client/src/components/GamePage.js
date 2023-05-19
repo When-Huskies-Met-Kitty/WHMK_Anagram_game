@@ -259,7 +259,7 @@ const GamePage = () => {
                                             <div className="overlay">
                                                 <div className="popup">
                                                     <span className="close" onClick={closePopup}>&times;</span>
-                                                    <p>ADD STATS HERE</p>
+                                                    <p>{statValues}</p>
                                                 </div>
                                             </div>
                                         )}
