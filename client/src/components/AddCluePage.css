@@ -11,7 +11,7 @@ form {
     margin-bottom: 20px;
   }
 
-  label, input[type="text"], input[type="checkbox"] {
+  label, input[type="text"], input[type="checkbox"], input[type="date"] {
     display: inline-block;
     vertical-align: middle;
     text-align: left;
@@ -26,7 +26,7 @@ form {
     font-weight: bold;
   }
   
-  input[type="text"],
+  input[type="text"],input[type="date"]
   textarea {
     width: 70%;
     padding: 10px;
@@ -55,8 +55,8 @@ form {
     font-size: 16px;
   }
   
-  @media (max-width: 600px) {
+  /* @media (max-width: 600px) {
     form {
       width: 80%;
     }
-  }
+  } */

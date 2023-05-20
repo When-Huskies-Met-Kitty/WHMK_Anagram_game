@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Clue from './ClueDataPage';
+import Clue from './AddCluePage';
 
 const Game = () => {
     const [clueData, setClueData] = useState(null);

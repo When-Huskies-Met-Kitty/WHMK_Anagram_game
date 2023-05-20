@@ -1,0 +1,89 @@
+.clue-page {
+    margin: 20px;
+  }
+  
+  .clue-data {
+    margin-bottom: 20px;
+  }
+  
+  .clue-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .clue-table-headings {
+    background-color: #f2f2f2;
+  }
+  
+  .clue-table-headings th {
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .clue-table-values td {
+    padding: 10px;
+    text-align:center
+  }
+  
+  .clue-table-values:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  .Add-clue{
+    height:50px;
+  }
+  .Add-clue-button{
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #B64F00;
+    color: white;
+  }
+  .edit-clue{
+    background-color: #B64F00;
+    border-radius: 3.5px;
+    border-color: #B64F00;
+    color: white;
+  }
+  .overlay {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Change the opacity and color as needed */
+  }
+  
+  .popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
+    min-width:50%;
+    max-width:80%;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    .popup{
+        top: 25%;
+        left: 25%;
+    }
+  }

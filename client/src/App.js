@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css'
-// import { displayStats, updateStats, updateStreak } from './components/Stats';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GamePage from './components/GamePage';
-import ClueDataPage from './components/ClueDataPage';
+import AddCluePage from './components/AddCluePage';
 import NotfoundPage from './components/NotFoundPage';
+import EditorCluePage from './components/EditorCluePage';
+import AuthorCluePage from './components/AuthorCluePage';
 
 function App() {
     return (
@@ -14,7 +15,8 @@ function App() {
             <div id="page-body">
               <Routes>
                 <Route path="/" element={<GamePage/>}></Route>
-                <Route path="/clue-form" element={<ClueDataPage/>}></Route>  
+                <Route path="/editor" element={<EditorCluePage/>}></Route>
+                <Route path="/author" element={<AuthorCluePage/>}></Route>  
                 {/* path="*" indicates if user hits any route that does not exists routes , the application will be redirected to this page */}
                 <Route path="*" element={<NotfoundPage/>}></Route>
               </Routes>

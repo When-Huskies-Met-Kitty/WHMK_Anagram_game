@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './ClueDataPage.css';
+import './AddCluePage.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const ClueDataPage = ({ clueData }) => {
+const AddCluePage = (props) => {
   const [answer, setAnswer] = useState('');
   const [clue, setClue] = useState('');
   const [articleUrl, setArticleUrl] = useState('');
-  const [used, setUsed] = useState(false);
+ 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,11 +17,11 @@ const ClueDataPage = ({ clueData }) => {
       toast.warning("Please enter required details");
       return;
     }
+    
     const response = await axios.post('http://localhost:5000/api/clues/saveClueData', {
             answer: answer,
             clue: clue,
-            articleUrl: articleUrl,
-            uses: used
+            articleUrl: articleUrl
         });
         console.log(response);
         if (response.data.isClueSaved) {
@@ -36,6 +36,7 @@ const ClueDataPage = ({ clueData }) => {
             progressBar: false,
             theme: "light",
             });
+            props.callBack && props.callBack();
 
         } else {
           toast.error("Error while saving clue",{
@@ -55,10 +56,11 @@ const ClueDataPage = ({ clueData }) => {
     setAnswer('');
     setArticleUrl('');
     setClue('');
-    setUsed(false);
   };
+
   return (
     <div>
+      <h2>Add Clue</h2>
       <form onSubmit={handleSubmit}>
         <div className='form-group'>
           <label>Answer<span className="required">*</span>:</label>
@@ -75,17 +77,11 @@ const ClueDataPage = ({ clueData }) => {
           <input type="text" placeholder="Enter clue article url" value={articleUrl} onChange={(event) => setArticleUrl(event.target.value)} />
         </div>
         <br />
-        <div className='form-group'>
-          <label>Used:</label>
-          <input type="checkbox" checked={used} onChange={(event) => setUsed(event.target.checked)} />
-        </div>
-        <br />
         <input type="submit" value="Submit" />
       </form>
-      <ToastContainer/>
     </div>
   );
 };
 
-export default ClueDataPage;
+export default AddCluePage;
 
