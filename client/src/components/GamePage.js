@@ -169,7 +169,9 @@ const GamePage = () => {
     updateStreak();
 
     return (
-        <div className="Game" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div id="main" className="Game" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <style>@import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');</style>
+            <img src="https://roamingkitty196290393.files.wordpress.com/2018/01/cropped-rk-logo.png"></img>
             <h1>Anagram Game</h1>
             {!gameOver ? (
                 <>
@@ -177,7 +179,7 @@ const GamePage = () => {
                         <>
                             <div id="top-of-game" style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "100px" }}>
                                 <div id="stats">
-                                    <p onClick={openPopup}>Statistics!</p>
+                                    <p class="sub-headings" onClick={openPopup}>STATS</p>
                                     {isOpen && (
                                     <div className="overlay">
                                         <div className="popup">
@@ -188,12 +190,12 @@ const GamePage = () => {
                                     )}
                                 </div>
 
-                                <div id="tries-left">
+                                <div id="tries-left" class="sub-headings">
                                     <p>Number of Times Tried: {retryCount}</p>
                                 </div>
 
                                 <div id="help">
-                                    <p onClick={openHelpPopup}>Help</p>
+                                    <p class="sub-headings" onClick={openHelpPopup}>Help</p>
                                     {helpIsOpen && (
                                     <div className="overlay">
                                         <div className="popup">
@@ -204,7 +206,7 @@ const GamePage = () => {
                                     )}
                                 </div>
                             </div>
-                            <div id="game-board" style={{ display: "flex", flexDirection: "column", alignItems: "center", border: "1px solid black", padding: "10px"}}>
+                            <div id="game-board" style={{ display: "flex", flexDirection: "column", alignItems: "center", border: "1px solid black", padding: "10px", margin: "10px"}}>
                                 <p>Clue: {clue.clue}</p>
                                 <a href={clue.articleUrl} style={{marginBottom: "10px" }}>Click here to visit article</a>
                                 <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
@@ -215,7 +217,7 @@ const GamePage = () => {
                                             onDragOver={e => e.preventDefault()}
                                             draggable
                                             onDragStart={e => box && handleDragStart(e, box.id)}
-                                            style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px" }}
+                                            style={{ border: "1px solid black", width: "30px", height: "30px", display: "inline-block", marginRight: "10px", "box-shadow": "2px 5px #888888" }}
                                         >
                                             {box?.value}
                                         </div>
@@ -233,7 +235,7 @@ const GamePage = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <button onClick={handleSubmit}>Submit</button>
+                                <button id="submit-btn" onClick={handleSubmit}>Submit</button>
                             </div>
                             <div id="incorrect guesses">
                                     <p>Guesses: {incorrectWords}</p>
