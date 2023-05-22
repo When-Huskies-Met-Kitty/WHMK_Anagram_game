@@ -57,7 +57,7 @@ const GamePage = () => {
 
         if (response.data.correct) {
             updateStats(true);
-            setMessage('Correct! You solved the anagram.');
+            setMessage('Congratulations! You solved the anagram.');
             setGameOver(true); // Set gameOver to true
             setEndTime(new Date().getTime()); // Set the end time
         } else {
@@ -71,6 +71,9 @@ const GamePage = () => {
             if (retryCount + 1 >= 3) {
                 updateStats(false)
                 setGameOver(true);
+                // const correctAnswer = clue.answer;
+                // Display the correct answer
+                setMessage('You used all your tries. The correct answer is: ${clue.answer}.');
                 setEndTime(new Date().getTime()); // Set the end time
             }
 
