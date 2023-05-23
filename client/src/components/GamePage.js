@@ -16,6 +16,8 @@ const GamePage = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [incorrectWords, setIncorrectWords] = useState("");
     const [helpIsOpen, setHelpIsOpen] = useState(false);
+    const [didWin,setDidWin] = useState(false);
+
 
     useEffect(() => {
         const lastPlayedTime = localStorage.getItem('lastPlayedTime');
@@ -58,8 +60,10 @@ const GamePage = () => {
         if (response.data.correct) {
             updateStats(true);
             setMessage('Congratulations! You solved the anagram.');
+            setDidWin(true);
             setGameOver(true); // Set gameOver to true
             setEndTime(new Date().getTime()); // Set the end time
+            console.log(didWin)
         } else {
             const guess = JSON.stringify(response.config.data).split('\"');
             const incorrectGuess = guess[4]
@@ -255,7 +259,10 @@ const GamePage = () => {
                         <p>You have used all your tries. Game over.</p>
                     ) : (
                         <>
-                            {localStorage.getItem('lastPlayedTime') ? (
+                            {localStorage.getItem('lastPlayedTime') && didWin ? (
+
+                                <p>Congratulations! You won the game.</p>
+                            ) : (
                                 <>
                                     <p>You have already played today. Please come back tomorrow.</p>
                                     <div id="stats">
@@ -270,8 +277,7 @@ const GamePage = () => {
                                         )}
                                     </div>
                                 </>
-                            ) : (
-                                <p>Congratulations! You won the game.</p>
+
                             )}
                         </>
                     )}
