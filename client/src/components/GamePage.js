@@ -256,7 +256,7 @@ const GamePage = () => {
                                 <>
                                     <p>You have already played today. Please come back tomorrow.</p>
                                     <div id="stats">
-                                        <p onClick={openPopup}>Statistics!</p>
+                                        <p class="sub-headings" onClick={openPopup}>STATS</p>
                                         {isOpen && (
                                             <div className="overlay">
                                                 <div className="popup">
