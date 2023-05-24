@@ -207,7 +207,7 @@ const GamePage = () => {
                                     <div className="overlay">
                                         <div className="popup">
                                         <span className="close" onClick={closeHelpPopup}>&times;</span>
-                                        <p>Drag and drop a letter into an empty box to spell out the scrambled word.</p>
+                                        <p>The clue for the anagram is related to the article hyperlinked. Read the blog post to get a better idea of what the anagram might be. Drag and drop a letter into an empty box to spell out the scrambled word.</p>
                                         </div>
                                     </div>
                                     )}
