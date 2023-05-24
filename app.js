@@ -14,7 +14,7 @@ const editorRoutes = require('./routes/api/editors');
 // Connect to MongoDB
 // remote mongodb+srv://whenHMK:<password>@whmk.3sd5shf.mongodb.net/?retryWrites=true&w=majority
 //local 'mongodb://localhost:27017/mern-demo'
-mongoose.connect( process.env.LOCAL_MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect( process.env.MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
 
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('Could not connect to MongoDB:', err));
