@@ -51,7 +51,7 @@ export function updateStreak() {
 
 export function displayStats() {
     const currGame = getStats();
-    const statValues = "Current Streak: " + currGame.currStreak + "\n Max Streak: " + currGame.maxStreak + "\n Win Rate: " + currGame.winRate + "%";
+    const statValues = "Current Streak: " + currGame.currStreak + " ||  Max Streak: " + currGame.maxStreak + " || Win Rate: " + currGame.winRate + "%";
     return statValues;
 }
 
