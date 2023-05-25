@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const Clue = require('./models/clue');
+require('dotenv').config();
 
 // Replace this URL with your MongoDB connection string if it's different
-const mongoURL = 'mongodb://localhost:27017/mern-demo';
+const mongoURL = process.env.MONGODB_CONNECTION_STRING;
+
 
 mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
