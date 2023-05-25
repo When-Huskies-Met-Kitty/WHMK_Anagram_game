@@ -56,7 +56,7 @@ const AuthorCluePage = () => {
                                 <td>{index+1}</td>
                                 <td>{clue.answer}</td>
                                 <td>{clue.clue}</td>
-                                <td>{clue.articleUrl}</td>
+                                <td><a href={clue.articleUrl}>{clue.articleUrl}</a></td>
                                 <td>{clue.used.toString()}</td>
                                 <td>{clue.dayOfUse && clue.dayOfUse.split('T')[0]}</td>
                             </tr>
