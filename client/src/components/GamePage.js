@@ -8,7 +8,11 @@ const GamePage = () => {
     const [message, setMessage] = useState("");
     const [letters, setLetters] = useState([]);
     const [boxes, setBoxes] = useState([]);
-    const [retryCount, setRetryCount] = useState(0);
+    // Initialization of retryCount with localStorage:
+    const [retryCount, setRetryCount] = useState(() => {
+        const savedRetryCount = localStorage.getItem('retryCount');
+        return savedRetryCount ? JSON.parse(savedRetryCount) : 0;
+    });
     const [gameOver, setGameOver] = useState(false);
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
@@ -148,6 +152,10 @@ const GamePage = () => {
             setTotalTime(timeTakenInSeconds);
         }
     }, [gameOver, startTime, endTime]);
+
+    useEffect(() => {
+        localStorage.setItem('retryCount', JSON.stringify(retryCount));
+    }, [retryCount]);
 
     useEffect(() => {
         if (endTime) {
