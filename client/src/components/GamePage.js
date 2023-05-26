@@ -77,7 +77,7 @@ const GamePage = () => {
                 setGameOver(true);
                 // const correctAnswer = clue.answer;
                 // Display the correct answer
-                setMessage('You used all your tries. The correct answer is: ${clue.answer}.');
+                setMessage("You used all your tries. The correct answer is: ${clue.answer}.");
                 setEndTime(new Date().getTime()); // Set the end time
             }
 
@@ -178,7 +178,7 @@ const GamePage = () => {
     return (
         <div id="main" className="Game" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <style>@import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');</style>
-            <img src="https://roamingkitty196290393.files.wordpress.com/2018/01/cropped-rk-logo.png"></img>
+            <img src="https://roamingkitty196290393.files.wordpress.com/2018/01/cropped-rk-logo.png" alt={"kitty Image"}></img>
             <h1>Anagram Game</h1>
             {!gameOver ? (
                 <>
@@ -186,7 +186,7 @@ const GamePage = () => {
                         <>
                             <div id="top-of-game" style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "100px" }}>
                                 <div id="stats">
-                                    <p class="sub-headings" onClick={openPopup}>STATS</p>
+                                    <p className="sub-headings" onClick={openPopup}>STATS</p>
                                     {isOpen && (
                                     <div className="overlay">
                                         <div className="popup">
@@ -197,12 +197,12 @@ const GamePage = () => {
                                     )}
                                 </div>
 
-                                <div id="tries-left" class="sub-headings">
+                                <div id="tries-left" className="sub-headings">
                                     <p>Number of Times Tried: {retryCount}</p>
                                 </div>
 
                                 <div id="help">
-                                    <p class="sub-headings" onClick={openHelpPopup}>Help</p>
+                                    <p className="sub-headings" onClick={openHelpPopup}>Help</p>
                                     {helpIsOpen && (
                                     <div className="overlay">
                                         <div className="popup">
@@ -266,7 +266,7 @@ const GamePage = () => {
                                 <>
                                     <p>You have already played today. Please come back tomorrow.</p>
                                     <div id="stats">
-                                        <p class="sub-headings" onClick={openPopup}>STATS</p>
+                                        <p className="sub-headings" onClick={openPopup}>STATS</p>
                                         {isOpen && (
                                             <div className="overlay">
                                                 <div className="popup">
