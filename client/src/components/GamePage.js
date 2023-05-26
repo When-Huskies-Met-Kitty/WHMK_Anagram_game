@@ -26,12 +26,15 @@ const GamePage = () => {
     useEffect(() => {
         const lastPlayedTime = localStorage.getItem('lastPlayedTime');
         if (lastPlayedTime) {
-            const twentyFourHours = 24 * 60 * 60 * 1000;
-            const currentTime = new Date().getTime();
-            const timeDiff = currentTime - parseInt(lastPlayedTime, 10);
-            if (timeDiff < twentyFourHours) {
+            const lastPlayedDate = new Date(parseInt(lastPlayedTime, 10));
+            const currentDate = new Date();
+
+            if (lastPlayedDate.getDate() === currentDate.getDate() &&
+                lastPlayedDate.getMonth() === currentDate.getMonth() &&
+                lastPlayedDate.getFullYear() === currentDate.getFullYear()) {
                 setGameOver(true);
                 setMessage('You can only play once per day. Please come back tomorrow.');
+                return;
             }
         }
 
@@ -49,6 +52,7 @@ const GamePage = () => {
                 setLetters(shuffledLetters);
                 setBoxes(new Array(answerLetters.length).fill(null));
                 setStartTime(new Date().getTime()); // Set the start time
+                localStorage.setItem('lastPlayedTime', new Date().getTime()); // Update the last played time
             })
             .catch((error) => {
                 console.error('Error:', error);
