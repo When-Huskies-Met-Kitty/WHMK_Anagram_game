@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-
+const path = require("path");
 
 const app = express();
 
@@ -21,7 +21,7 @@ mongoose.connect( process.env.MONGODB_CONNECTION_STRING, { useNewUrlParser: true
 
 // Apply CORS middleware
 app.use(cors());
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(express.static(path.resolve(__dirname, "client/build")));
 
 // Middleware for parsing JSON
 app.use(express.json());
