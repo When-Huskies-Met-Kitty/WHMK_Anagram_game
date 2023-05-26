@@ -52,7 +52,6 @@ const GamePage = () => {
                 setLetters(shuffledLetters);
                 setBoxes(new Array(answerLetters.length).fill(null));
                 setStartTime(new Date().getTime()); // Set the start time
-                localStorage.setItem('lastPlayedTime', new Date().getTime()); // Update the last played time
             })
             .catch((error) => {
                 console.error('Error:', error);
