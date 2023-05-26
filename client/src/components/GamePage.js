@@ -52,7 +52,7 @@ const GamePage = () => {
     }, []);
 
     const handleSubmit = async () => {
-        const response = await axios.post('http://localhost:5000/api/clues/validate', {
+        const response = await axios.post('/api/clues/validate', {
             answer: boxes.map(box => box?.value).join(''),
             clueId: clue._id,
         });
