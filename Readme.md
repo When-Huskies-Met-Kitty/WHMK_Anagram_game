@@ -1,6 +1,6 @@
 # Anagram Game for https://roamingkitty.com/
 
-This game was developed in order to increase the user engagement within the site. A daily anagram puzzle is posted with a linked article of the day upon which the clue and answer are based. The game was developed to integrate well with the existing wordpress site and we belive meets the bussiness case of developing a fun game to increase user engagement whithout becomming the focus of the site whci is the authors and the content.
+This game was developed in order to increase the user engagement within the site. A daily anagram puzzle is posted with a linked article of the day upon which the clue and answer are based. The game was developed to integrate well with the existing WordPress site, and we believe meets the business case of developing a fun game to increase user engagement whithout becomming the focus of the site whci is the authors and the content.
 
 # MERN Stack Web Game
 
@@ -30,9 +30,9 @@ npm install
 you will need the .env file to connect to the database. Please contact me for the .env file.
 
 The way this is set up is in the app.js file, the mongoose.connect() function is called with the .env file as an argument. This is how the database is connected to the app.
-```angular2html
+```javascript
 // Line 19
-mongoose.connect( process.env.LOCAL_MONGODB_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect( process.env.LOCAL_MONGODB_CONNECTION_STRING,{ useNewUrlParser: true, useUnifiedTopology: true})
 ```
 the current options are:
 
