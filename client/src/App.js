@@ -17,7 +17,7 @@ function App() {
                 <Route path="/" element={<GamePage/>}></Route>
                 <Route path="/editor" element={<EditorCluePage/>}></Route>
                 <Route path="/author" element={<AuthorCluePage/>}></Route>  
-                {/* path="*" indicates if user hits any route that does not exists routes , the application will be redirected to this page */}
+                {/* path="*" indicates if user hits any route that does not exist routes , the application will be redirected to this page */}
                 <Route path="*" element={<NotfoundPage/>}></Route>
               </Routes>
             </div>
