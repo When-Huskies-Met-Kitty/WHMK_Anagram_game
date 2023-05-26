@@ -18,7 +18,7 @@ const AddCluePage = (props) => {
       return;
     }
     
-    const response = await axios.post('http://localhost:5000/api/clues/saveClueData', {
+    const response = await axios.post('/api/clues/saveClueData', {
             answer: answer,
             clue: clue,
             articleUrl: articleUrl

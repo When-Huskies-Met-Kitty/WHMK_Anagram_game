@@ -23,7 +23,7 @@ const EditPage = (props) => {
           return;
         }
         console.log("day Of use " + dayOfUse);
-        const response = await axios.put('http://localhost:5000/api/clues/updateClueData', {
+        const response = await axios.put('/api/clues/updateClueData', {
                 _id:id,
                 answer: answer,
                 clue: clue,

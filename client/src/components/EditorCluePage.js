@@ -15,7 +15,7 @@ const EditorCluePage = () => {
     }, []);
 
     const fetchClueData = async () =>{
-        const response = await axios.get('http://localhost:5000/api/clues/getEntireClueData');
+        const response = await axios.get('/api/clues/getEntireClueData');
         if(response.data.doesClueDataExist){
             setCluesData(response.data.clueData);
         }
