@@ -189,7 +189,7 @@ const GamePage = () => {
     return (
         <div id="main" className="Game" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <style>@import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');</style>
-            <img src="https://roamingkitty196290393.files.wordpress.com/2018/01/cropped-rk-logo.png" alt={"kitty Image"}></img>
+            <img src="https://roamingkitty196290393.files.wordpress.com/2018/01/cropped-rk-logo.png" alt={"kitty"}></img>
             <h1>Anagram Game</h1>
             {!gameOver ? (
                 <>
