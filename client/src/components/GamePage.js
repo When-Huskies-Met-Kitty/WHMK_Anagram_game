@@ -26,12 +26,15 @@ const GamePage = () => {
     useEffect(() => {
         const lastPlayedTime = localStorage.getItem('lastPlayedTime');
         if (lastPlayedTime) {
-            const twentyFourHours = 24 * 60 * 60 * 1000;
-            const currentTime = new Date().getTime();
-            const timeDiff = currentTime - parseInt(lastPlayedTime, 10);
-            if (timeDiff < twentyFourHours) {
+            const lastPlayedDate = new Date(parseInt(lastPlayedTime, 10));
+            const currentDate = new Date();
+
+            if (lastPlayedDate.getDate() === currentDate.getDate() &&
+                lastPlayedDate.getMonth() === currentDate.getMonth() &&
+                lastPlayedDate.getFullYear() === currentDate.getFullYear()) {
                 setGameOver(true);
                 setMessage('You can only play once per day. Please come back tomorrow.');
+                return;
             }
         }
 
@@ -186,7 +189,7 @@ const GamePage = () => {
     return (
         <div id="main" className="Game" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <style>@import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');</style>
-            <img src="https://roamingkitty196290393.files.wordpress.com/2018/01/cropped-rk-logo.png" alt={"kitty Image"}></img>
+            <img src="https://roamingkitty196290393.files.wordpress.com/2018/01/cropped-rk-logo.png" alt={"kitty"}></img>
             <h1>Anagram Game</h1>
             {!gameOver ? (
                 <>
