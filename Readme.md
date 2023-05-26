@@ -1,3 +1,7 @@
+# Anagram Game for https://roamingkitty.com/
+
+This game was developed in order to increase the user engagement within the site. A daily anagram puzzle is posted with a linked article of the day upon which the clue and answer are based. The game was developed to integrate well with the existing wordpress site and we belive meets the bussiness case of developing a fun game to increase user engagement whithout becomming the focus of the site whci is the authors and the content.
+
 # MERN Stack Web Game
 
 This project is a web-based game built using the MERN stack (MongoDB, Express, React, and Node.js). The game features daily anagram puzzles, streak counts, and author/editor interfaces.
