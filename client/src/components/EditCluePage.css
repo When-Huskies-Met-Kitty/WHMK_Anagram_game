@@ -25,9 +25,9 @@ form {
     margin-bottom: 10px;
     font-weight: bold;
   }
-  
-  input[type="text"],input[type="date"]
-  textarea {
+
+input[type="text"], input[type="date"],
+textarea {
     width: 70%;
     padding: 10px;
     border: 1px solid #ccc;
