@@ -26,6 +26,9 @@ app.use(express.static(path.resolve(__dirname, "client/build")));
 // Middleware for parsing JSON
 app.use(express.json());
 
+// Serve static files from the React app
+app.use(express.static(path.resolve(__dirname, 'client/build')));
+
 // Use API routes
 app.use('/api/clues', clueRoutes);
 app.use('/api/authors', authorRoutes);
@@ -34,6 +37,10 @@ app.use('/api/editors', editorRoutes);
 // Simple "Hello, World!" route
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello, World!' });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));
 });
 
 // Start the server
