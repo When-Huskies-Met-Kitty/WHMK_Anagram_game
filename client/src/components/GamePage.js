@@ -256,7 +256,8 @@ const GamePage = () => {
             ) : (
                 <div>
                     {retryCount >= 3 ? (
-                        <p>You have used all your tries. Game over.</p>
+                        <p>You have used all your tries. Game over. The answer was: {clue ? clue.answer : ""}</p>
+
                     ) : (
                         <>
                             {localStorage.getItem('lastPlayedTime') && didWin ? (
