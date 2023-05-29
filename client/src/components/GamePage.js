@@ -72,7 +72,7 @@ const GamePage = () => {
             setEndTime(new Date().getTime()); // Set the end time
             console.log(didWin)
         } else {
-            const guess = JSON.stringify(response.config.data).split('\"');
+            const guess = JSON.stringify(response.config.data).split('"');
             const incorrectGuess = guess[4]
             setMessage('Incorrect! Please try again.');
             setIncorrectWords((prevGuesses) => [...prevGuesses, incorrectGuess]);
@@ -256,7 +256,8 @@ const GamePage = () => {
                                 <button id="submit-btn" onClick={handleSubmit}>Submit</button>
                             </div>
                             <div id="incorrect guesses">
-                                    <p>Guesses: {incorrectWords.map((guess, index) => (
+                                    <p>Guesses: </p>
+                                    <p>{incorrectWords.map((guess, index) => (
                                                 <React.Fragment key={index}>
                                                     {guess}
                                                     <br />
