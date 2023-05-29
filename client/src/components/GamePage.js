@@ -18,7 +18,7 @@ const GamePage = () => {
     const [endTime, setEndTime] = useState(null);
     const [totalTime, setTotalTime] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    const [incorrectWords, setIncorrectWords] = useState("");
+    const [incorrectWords, setIncorrectWords] = useState([]);
     const [helpIsOpen, setHelpIsOpen] = useState(false);
     const [didWin,setDidWin] = useState(false);
 
@@ -75,7 +75,7 @@ const GamePage = () => {
             const guess = JSON.stringify(response.config.data).split('\"');
             const incorrectGuess = guess[4]
             setMessage('Incorrect! Please try again.');
-            setIncorrectWords(incorrectWords.concat(" ", incorrectGuess.substring(0,incorrectGuess.length-1)));
+            setIncorrectWords((prevGuesses) => [...prevGuesses, incorrectGuess]);
 
             setRetryCount(prevRetryCount => prevRetryCount + 1);
 
@@ -256,7 +256,12 @@ const GamePage = () => {
                                 <button id="submit-btn" onClick={handleSubmit}>Submit</button>
                             </div>
                             <div id="incorrect guesses">
-                                    <p>Guesses: {incorrectWords}</p>
+                                    <p>Guesses: {incorrectWords.map((guess, index) => (
+                                                <React.Fragment key={index}>
+                                                    {guess}
+                                                    <br />
+                                                </React.Fragment>
+                                                ))}</p>
                             </div>
                         </>
                     ) : (
