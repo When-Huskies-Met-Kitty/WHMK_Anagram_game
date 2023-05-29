@@ -77,8 +77,6 @@ const GamePage = () => {
             setMessage('Incorrect! Please try again.');
             incorrectGuess = incorrectGuess.replace(/\\/g, '');
             setIncorrectWords((prevGuesses) => [...prevGuesses, incorrectGuess]);
-            console.log(incorrectGuess);
-            console.log(incorrectWords);
 
             setRetryCount(prevRetryCount => prevRetryCount + 1);
 
