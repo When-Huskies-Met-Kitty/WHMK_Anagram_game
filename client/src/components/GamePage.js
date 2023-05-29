@@ -73,9 +73,9 @@ const GamePage = () => {
             console.log(didWin)
         } else {
             const guess = JSON.stringify(response.config.data).split('"');
-            const incorrectGuess = guess[4];
+            var incorrectGuess = guess[4];
             setMessage('Incorrect! Please try again.');
-            incorrectGuess.replace(/\\$/, '');
+            incorrectGuess = incorrectGuess.replace(/\\/g, '');
             setIncorrectWords((prevGuesses) => [...prevGuesses, incorrectGuess]);
             console.log(incorrectGuess);
             console.log(incorrectWords);
