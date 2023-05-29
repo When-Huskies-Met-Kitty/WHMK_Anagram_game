@@ -47,6 +47,7 @@ const GamePage = () => {
             })
             .then((data) => {
                 setClue(data);
+                localStorage.setItem('todayAnswer', data.answer)
                 const answerLetters = data.answer.split('');
                 const shuffledLetters = shuffle(answerLetters.map((letter, index) => ({ id: index, value: letter })));
                 setLetters(shuffledLetters);
@@ -274,7 +275,7 @@ const GamePage = () => {
             ) : (
                 <div>
                     {retryCount >= 3 ? (
-                        <p>You have used all your tries. Game over. The answer was: {clue ? clue.answer : ""}</p>
+                        <p>You have used all your tries. Game over. The answer was: {localStorage.getItem('todayAnswer')}</p>
 
                     ) : (
                         <>
