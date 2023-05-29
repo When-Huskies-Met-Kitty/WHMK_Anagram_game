@@ -260,7 +260,7 @@ const GamePage = () => {
                                     <p>{incorrectWords.map((guess, index) => (
                                                 <React.Fragment key={index}>
                                                     {guess}
-                                                    <br />
+                                                    <br/>
                                                 </React.Fragment>
                                                 ))}</p>
                             </div>
