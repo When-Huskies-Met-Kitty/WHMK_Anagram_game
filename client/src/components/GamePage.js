@@ -257,12 +257,7 @@ const GamePage = () => {
                             </div>
                             <div id="incorrect guesses">
                                     <p>Guesses: </p>
-                                    <p>{incorrectWords.map((guess, index) => (
-                                                <React.Fragment key={index}>
-                                                    {guess}
-                                                    <br/>
-                                                </React.Fragment>
-                                                ))}</p>
+                                    <p>{incorrectWords.join("\n")}</p>
                             </div>
                         </>
                     ) : (
