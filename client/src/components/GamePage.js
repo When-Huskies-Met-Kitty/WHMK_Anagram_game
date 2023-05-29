@@ -18,7 +18,7 @@ const GamePage = () => {
     const [endTime, setEndTime] = useState(null);
     const [totalTime, setTotalTime] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    const [incorrectWords, setIncorrectWords] = useState("");
+    const [incorrectWords, setIncorrectWords] = useState([]);
     const [helpIsOpen, setHelpIsOpen] = useState(false);
     const [didWin,setDidWin] = useState(false);
 
@@ -72,10 +72,11 @@ const GamePage = () => {
             setEndTime(new Date().getTime()); // Set the end time
             console.log(didWin)
         } else {
-            const guess = JSON.stringify(response.config.data).split('\"');
-            const incorrectGuess = guess[4]
+            const guess = JSON.stringify(response.config.data).split('"');
+            var incorrectGuess = guess[4];
             setMessage('Incorrect! Please try again.');
-            setIncorrectWords(incorrectWords.concat(" ", incorrectGuess.substring(0,incorrectGuess.length-1)));
+            incorrectGuess = incorrectGuess.replace(/\\/g, '');
+            setIncorrectWords((prevGuesses) => [...prevGuesses, incorrectGuess]);
 
             setRetryCount(prevRetryCount => prevRetryCount + 1);
 
@@ -256,7 +257,13 @@ const GamePage = () => {
                                 <button id="submit-btn" onClick={handleSubmit}>Submit</button>
                             </div>
                             <div id="incorrect guesses">
-                                    <p>Guesses: {incorrectWords}</p>
+                                    <p>Guesses: </p>
+                                    <p>{incorrectWords.map((guess, index) => (
+                                                <React.Fragment key={index}>
+                                                    {guess}
+                                                    <br/>
+                                                </React.Fragment>
+                                                ))}</p>
                             </div>
                         </>
                     ) : (
